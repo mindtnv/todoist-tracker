@@ -18,8 +18,11 @@ const main = async () => {
   ["create", "delete", "done", "update"].forEach((method) => {
     service.on(method as TaskServiceEvent, async (task) => {
       const content = Buffer.from(JSON.stringify(task), "utf-8");
-      for (let label of task.labels) {
-        const route = `${method}.${label.name}`;
+      const labels = [...task.labels.map((x) => x.name)];
+      if (labels.length === 0) labels.push("null");
+
+      for (let label of labels) {
+        const route = `${method}.${label}`;
         console.log(`[${route}] (${task.id}) ${task.content}`);
         channel.publish(EXCHANGE, route, content);
       }

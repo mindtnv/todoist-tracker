@@ -1,0 +1,21 @@
+﻿version: "3.7"
+
+networks:
+  traefik-public:
+    external: true
+
+services:
+  todoist-tracker:
+    image: registry.dev.zldk.su/todoist-tracker
+    networks:
+      - traefik-public
+    
+    environment:
+      - APP_TODOIST_TOKEN=${APP_TODOIST_TOKEN?Variable not set}
+      - APP_AMQP_URL=amqp://localhost
+    
+    deploy:
+      restart_policy:
+        condition: on-failure
+      mode: replicated
+      replicas: 1

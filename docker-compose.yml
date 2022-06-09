@@ -9,11 +9,11 @@ services:
     image: registry.dev.zldk.su/todoist-tracker
     networks:
       - traefik-public
-    
+
     environment:
       - APP_TODOIST_TOKEN=${APP_TODOIST_TOKEN?Variable not set}
       - APP_AMQP_URL=amqp://localhost
-    
+
     deploy:
       restart_policy:
         condition: on-failure

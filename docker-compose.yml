@@ -12,7 +12,7 @@ services:
 
     environment:
       - APP_TODOIST_TOKEN=${APP_TODOIST_TOKEN?Variable not set}
-      - APP_AMQP_URL=amqp://localhost
+      - APP_AMQP_URL=amqp://rabbitmq
 
     deploy:
       restart_policy:

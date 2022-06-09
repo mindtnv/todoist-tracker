@@ -37,6 +37,7 @@ export class TodoService {
 
   async start() {
     await this.labels.pull();
+    await this.tasks.pull();
     this.tasks.start();
   }
 

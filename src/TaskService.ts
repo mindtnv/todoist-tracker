@@ -2,7 +2,12 @@
 import { clearInterval } from "timers";
 import EventEmitter from "events";
 
-export type TaskServiceEvent = "delete" | "done" | "create" | "update";
+export type TaskServiceEvent =
+  | "delete"
+  | "done"
+  | "create"
+  | "update"
+  | "shift";
 
 export interface TaskServiceOptions {
   pullInterval: number;
@@ -47,6 +52,12 @@ export class TaskService {
             // Task can be changed
             const savedTask = this.store.get(task.id) as Task;
             if (JSON.stringify(task) !== JSON.stringify(savedTask)) {
+              // Shift recurring task
+              if (task.description.length && task.description[0] === "!") {
+                this.store.set(task.id, task);
+                this.emitter.emit("shift", task);
+                continue;
+              }
               if (task?.due?.recurring && savedTask?.due?.recurring) {
                 const savedDate = savedTask.due?.datetime ?? savedTask.due.date;
                 const newDate = task.due?.datetime ?? task.due.date;

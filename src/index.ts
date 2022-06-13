@@ -15,7 +15,7 @@ const main = async () => {
   await channel.assertExchange(EXCHANGE, "topic");
   const service = new TodoService(API_TOKEN);
 
-  ["create", "delete", "done", "update"].forEach((method) => {
+  ["create", "delete", "done", "update", "shift"].forEach((method) => {
     service.on(method as TaskServiceEvent, async (task) => {
       const content = Buffer.from(JSON.stringify(task), "utf-8");
       const labels = [...task.labels.map((x) => x.name)];

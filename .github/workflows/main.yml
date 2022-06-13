@@ -8,6 +8,7 @@ on:
 
 env:
   APP_TODOIST_TOKEN: ${{ secrets.TODOIST_TOKEN }}
+  APP_AMQP_URL: ${{ secrets.APP_AMQP_URL }}
 
 jobs:
   build-push:

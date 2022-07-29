@@ -1,6 +1,6 @@
 ﻿import { Label, TodoistApi } from "@doist/todoist-api-typescript";
 
-export class LabelService {
+export class TodoistLabelService {
   private readonly api: TodoistApi;
   private store = new Map<number, Label>();
 

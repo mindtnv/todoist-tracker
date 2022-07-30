@@ -1,12 +1,10 @@
-﻿import { TaskServiceEvent, TodoistTaskService } from "./TodoistTaskService";
+﻿import { TodoistTaskService } from "./TodoistTaskService";
 import { TodoistLabelService } from "./TodoistLabelService";
 import { Label, TodoistApi } from "@doist/todoist-api-typescript";
-import { CommonTask } from "./types";
+import { CommonTask, TaskServiceEvent, TodoService } from "./types";
 import { todoistTaskConverter } from "./TodoistTaskConverter";
 
-export type TodoServiceEvent = TaskServiceEvent;
-
-export class TodoistTodoService {
+export class TodoistTodoService implements TodoService {
   private readonly api: TodoistApi;
   tasks: TodoistTaskService;
   labels: TodoistLabelService;
@@ -21,7 +19,7 @@ export class TodoistTodoService {
   }
 
   on(
-    event: TodoServiceEvent,
+    event: TaskServiceEvent,
     callback: (task: CommonTask, ...args: any[]) => any
   ) {
     this.tasks.on(event, async (task) => {

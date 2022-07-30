@@ -1,6 +1,6 @@
 ﻿import { TodoistTodoService } from "./TodoistTodoService";
 import { getEnvOrThrow } from "./utils";
-import { TaskServiceEvent } from "./TodoistTaskService";
+import { TaskServiceEvent } from "./types";
 
 const amqp = require("amqplib");
 const EXCHANGE = process.env["APP_AMQP_EXCHANGE"] ?? "todolist";

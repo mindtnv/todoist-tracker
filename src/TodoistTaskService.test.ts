@@ -1,6 +1,7 @@
-﻿import { TaskServiceEvent, TodoistTaskService } from "./TodoistTaskService";
+﻿import { TodoistTaskService } from "./TodoistTaskService";
 import { Task, TodoistApi } from "@doist/todoist-api-typescript";
 import Mock = jest.Mock;
+import { TaskServiceEvent } from "./types";
 
 jest.mock("@doist/todoist-api-typescript");
 

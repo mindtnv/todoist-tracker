@@ -1,4 +1,18 @@
-﻿export interface TaskMeta {
+﻿export type TaskServiceEvent =
+  | "delete"
+  | "done"
+  | "create"
+  | "update"
+  | "shift";
+
+export interface TodoService {
+  on(
+    event: TaskServiceEvent,
+    callback: (task: CommonTask, ...args: any[]) => any
+  ): void;
+}
+
+export interface TaskMeta {
   labels: string[];
 }
 

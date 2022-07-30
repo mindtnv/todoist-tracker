@@ -1,13 +1,7 @@
 ﻿import { GetTasksArgs, Task, TodoistApi } from "@doist/todoist-api-typescript";
 import { clearInterval } from "timers";
 import EventEmitter from "events";
-
-export type TaskServiceEvent =
-  | "delete"
-  | "done"
-  | "create"
-  | "update"
-  | "shift";
+import { TaskServiceEvent } from "./types";
 
 export interface TodoistTaskServiceOptions {
   pullInterval: number;

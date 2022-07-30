@@ -77,6 +77,7 @@ export class TodoistTaskService {
       if (JSON.stringify(task) !== JSON.stringify(savedTask)) {
         // Shift recurring task
         if (
+          task.description &&
           task.description.length &&
           task.description.startsWith(this.options.shiftPrefix)
         ) {
@@ -97,9 +98,10 @@ export class TodoistTaskService {
       }
     }
     // Catch discarded tasks
+    let tasksToDelete = [];
     for (let task of this.store.values()) {
       if (!responseTaskIds.has(task.id)) {
-        this.store.delete(task.id);
+        tasksToDelete.push(task.id);
         try {
           const discardedTask = await this.api.getTask(task.id);
           if (discardedTask.completed) {
@@ -110,6 +112,7 @@ export class TodoistTaskService {
         }
       }
     }
+    tasksToDelete.forEach((x) => this.store.delete(x));
   }
 
   start() {

@@ -12,4 +12,27 @@ Crawls updates from **todoist api** and send to **RabbitMQ** message queue.
 
 Message sends with **{method}.{tag}** routing key.
 
+## Dev accounts
+
+### Todoist
+
+`testdev1929@gmail.com`:`dk8A10Hf`
+`e008137d156508affa2e84931b22fdab922f7641`
+
 ## Task object
+
+```ts
+export interface CommonDue {
+  date: Date;
+}
+
+export interface CommonTask {
+  id: number;
+  title: string;
+  recurring: boolean;
+  due?: CommonDue;
+  labels: string[];
+  order: number;
+  priority: number;
+}
+```

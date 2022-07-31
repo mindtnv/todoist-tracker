@@ -81,6 +81,7 @@ describe("Receive Test", () => {
     await service.receive();
     mockGetTasks(() => [nextTask]);
     await service.receive();
+    await service.receive();
     haveBeenEmitted("create");
     haveBeenEmitted("done");
     expect(Array.from(events.keys())).toHaveLength(2);

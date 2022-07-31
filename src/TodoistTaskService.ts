@@ -84,6 +84,7 @@ export class TodoistTaskService {
           const newDate = task.due?.datetime ?? task.due.date;
           if (newDate > savedDate) {
             this.emitDone(savedTask);
+            this.store.set(task.id, task);
             continue;
           }
         }

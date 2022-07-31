@@ -10,6 +10,9 @@ export interface TodoService {
     event: TaskServiceEvent,
     callback: (task: CommonTask, ...args: any[]) => any
   ): void;
+
+  start(): Promise<any>;
+  stop(): Promise<any>;
 }
 
 export interface TaskMeta {

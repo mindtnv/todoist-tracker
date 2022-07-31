@@ -40,7 +40,7 @@ export class TodoistTodoService implements TodoService {
     this.tasks.start();
   }
 
-  stop() {
+  async stop() {
     this.tasks.stop();
   }
 }

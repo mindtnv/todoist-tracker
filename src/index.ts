@@ -1,6 +1,6 @@
 ﻿import { TodoistTodoService } from "./TodoistTodoService";
 import { getEnvOrThrow } from "./utils";
-import { TaskServiceEvent } from "./types";
+import { TodoServiceAmqpService } from "./TodoServiceAmqpService";
 
 const amqp = require("amqplib");
 const EXCHANGE = process.env["APP_AMQP_EXCHANGE"] ?? "todolist";
@@ -13,24 +13,18 @@ const main = async () => {
   const channel = await connection.createChannel();
   console.log(`Asserting ${EXCHANGE} exchange`);
   await channel.assertExchange(EXCHANGE, "topic");
-  const service = new TodoistTodoService(API_TOKEN);
 
-  ["create", "delete", "done", "update", "shift"].forEach((method) => {
-    service.on(method as TaskServiceEvent, async (task) => {
-      const content = Buffer.from(JSON.stringify(task), "utf-8");
-      const labels = [...task.labels];
-      if (labels.length === 0) labels.push("null");
-
-      for (let label of labels) {
-        const route = `${method}.${label}`;
-        console.log(`[${route}] (${task.id}) ${task.title}`);
-        channel.publish(EXCHANGE, route, content);
-      }
-    });
-  });
+  const todoistService = new TodoistTodoService(API_TOKEN);
+  const sender = new TodoServiceAmqpService(
+    {
+      channel,
+      exchange: EXCHANGE,
+    },
+    todoistService
+  );
 
   console.log(`Start pulling updates`);
-  await service.start();
+  await sender.start();
 };
 
 main();
